@@ -1,0 +1,84 @@
+-- Database: market
+
+-- DROP DATABASE market;
+
+CREATE DATABASE market
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Russian_Russia.1251'
+       LC_CTYPE = 'Russian_Russia.1251'
+       CONNECTION LIMIT = -1;
+
+
+
+-- Table: products
+
+-- DROP TABLE products;
+
+CREATE TABLE products
+(
+  name character varying(255) NOT NULL,
+  price real,
+  CONSTRAINT products_pkey PRIMARY KEY (name)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE products
+  OWNER TO postgres;
+
+  
+  -- Table: roles
+
+-- DROP TABLE roles;
+
+CREATE TABLE roles
+(
+  name character varying(255) NOT NULL,
+  CONSTRAINT roles_pkey PRIMARY KEY (name)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE roles
+  OWNER TO postgres;
+  
+  
+  -- Table: user_roles
+
+-- DROP TABLE user_roles;
+
+CREATE TABLE user_roles
+(
+  user_role_id integer NOT NULL,
+  "user" character varying(45) NOT NULL,
+  role character varying(45) NOT NULL,
+  CONSTRAINT user_roles_pkey PRIMARY KEY (user_role_id),
+  CONSTRAINT fk_username FOREIGN KEY ("user")
+      REFERENCES users (name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE user_roles
+  OWNER TO postgres;
+  
+  
+  -- Table: users
+
+-- DROP TABLE users;
+
+CREATE TABLE users
+(
+  name character varying(255) NOT NULL,
+  password character varying(255),
+  CONSTRAINT users_pkey PRIMARY KEY (name)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO postgres;
+  
