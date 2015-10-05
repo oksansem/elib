@@ -26,6 +26,7 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     private UserDAO userDAO;
 
+    
     public UserDetails loadUserByUsername(String login)
             throws UsernameNotFoundException {
         User user = userDAO.getUser(login);
