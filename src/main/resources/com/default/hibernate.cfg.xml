@@ -6,9 +6,9 @@
 	<session-factory>
 
 		<!-- SQL dialect -->
-		<!-- <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> -->
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-		<property name="dialect">org.hibernate.dialect.H2Dialect</property>
+<!--  <property name="dialect">org.hibernate.dialect.H2Dialect</property> -->
 
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
@@ -16,8 +16,8 @@
 
 
 		<!-- Mapping files -->
-		<mapping resource="com/default/model/User.hbm.xml" />
-		<mapping resource="com/default/model/Role.hbm.xml" />
+<!-- 		<mapping resource="com/default/model/User.hbm.xml" /> -->
+<!-- 		<mapping resource="com/default/model/Role.hbm.xml" /> -->
 
 
 	</session-factory>

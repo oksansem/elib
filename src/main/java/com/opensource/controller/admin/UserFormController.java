@@ -21,18 +21,18 @@ public class UserFormController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
     public String createNewUser(User user) {
-        if (userService.isUserExists(user.getName())) {
+        if (userService.isUserExists(user.getUserName())) {
             return null;
         }
         user = userService.createUser(user);
-        return "User '"+user.getName()+"' has been successfully created!";
+        return "User '"+user.getUserName()+"' has been successfully created!";
     }
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteUser(User user) {
-      String name = user.getName();
+      String name = user.getUserName();
         if (Constants.ADMIN_USER.equals(name)) {
             return null;
         }

@@ -1,4 +1,10 @@
 .idea
 *.iml
 /lib
-/target
+
+/classes/
+/test-classes/
+.classpath
+.project
+.settings/
+target/

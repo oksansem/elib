@@ -48,7 +48,7 @@ public class AdminPageController {
         Iterator<User> usersIterator = users.iterator();
         while (usersIterator.hasNext()) {
             User user = usersIterator.next();
-            if (user.getName().equals(principal.getName())) {
+            if (user.getUserName().equals(principal.getName())) {
                 usersIterator.remove();
             }
         }
