@@ -15,60 +15,69 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Repository
 @Transactional
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+	// @Autowired
+	// private SessionFactory sessionFactory;
 
-    @Override
-    public User getUser(String name) {
-        Query query = openSession().createQuery("from User u where u.name = :name");
-        query.setParameter("name", name);
-        List userList = query.list();
-        if (!userList.isEmpty())
-            return (User) userList.get(0);
-        else
-            return null;
-    }
+	@PersistenceContext
+	private EntityManager em;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<User> getUsers() {
-        Query query = openSession().createQuery("from User");
-        return query.list();
-    }
+	@Override
+	public User getUser(String name) {
 
-    @Override
-    public User createUser(String name, String password, Set<Role> roles) {
-        User user = new User(name, password, roles);
-        openSession().save(user);
-        return user;
-    }
+		List<User> userList = em
+				.createNamedQuery("User.findByUserName", User.class)
+				.setParameter("userName", name).getResultList();
 
-    @Override
-    public void deleteUser(String name) {
-        User user = new User();
-        user.setName(name);
-        openSession().delete(user);
-    }
+		if (!userList.isEmpty())
+			return (User) userList.get(0);
+		else
+			return null;
 
-    @Override
-    public boolean hasRole(String name, String roleString) {
-        if (StringUtils.isEmpty(roleString)) {
-            return false;
-        }
-        User user = getUser(name);
-        for (Role role : user.getRoles()) {
-            if (roleString.equals(role.getName())) {
-                return true;
-            }
-        }
-        return false;
-    }
+	}
 
-    private Session openSession() {
-        return sessionFactory.getCurrentSession();
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsers() {
+		List<User> userList = em.createNamedQuery("User.findAll", User.class)
+				.getResultList();
+
+		return userList;
+
+	}
+
+	@Override
+	public User createUser(String name, String password, Set<Role> roles) {
+		User user = new User(name, password, roles);
+		em.persist(user);
+		return user;
+	}
+
+	@Override
+	public void deleteUser(String name) {
+		User user = new User();
+		user.setUserName(name);
+		em.remove(user);
+	}
+
+	@Override
+	public boolean hasRole(String name, String roleString) {
+		if (StringUtils.isEmpty(roleString)) {
+			return false;
+		}
+		User user = getUser(name);
+		for (Role role : user.getRoles()) {
+			if (roleString.equals(role.getRoleName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

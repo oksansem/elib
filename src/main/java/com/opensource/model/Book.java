@@ -43,32 +43,38 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Book.findByBookId", query = "SELECT b FROM Book b WHERE b.bookId = :bookId"),
     @NamedQuery(name = "Book.findByBookName", query = "SELECT b FROM Book b WHERE b.bookName = :bookName"),
     @NamedQuery(name = "Book.findByBookAddedDate", query = "SELECT b FROM Book b WHERE b.bookAddedDate = :bookAddedDate"),
-    @NamedQuery(name = "Book.findByAccessTypeId", query = "SELECT b FROM Book b WHERE b.accessTypeId = :accessTypeId")})
+    @NamedQuery(name = "Book.findByAccessTypeId", query = "SELECT b FROM Book b WHERE b.accessType = :accessType")})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "book_id")
     private Integer bookId;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
     @Column(name = "book_name")
     private String bookName;
+    
     @Lob
     @Size(max = 65535)
     @Column(name = "book_descriptions")
     private String bookDescriptions;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "book_added_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date bookAddedDate;
+    
     @ManyToOne
     @JoinColumn(name = "access_type_id")
     private AccessType accessType;
+    
     @ManyToMany
     @JoinTable(
             name = "BOOKS_CATEGORIES",

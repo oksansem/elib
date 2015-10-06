@@ -8,6 +8,7 @@ package com.opensource.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,28 +41,36 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByBlocked", query = "SELECT u FROM User u WHERE u.blocked = :blocked")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
+    
     @Size(max = 50)
+    @NotNull
     @Column(name = "user_name")
     private String userName;
+    
     @Size(max = 50)
     @Column(name = "user_password")
     private String userPassword;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "user_login")
-    private int userLogin;
+    private String userLogin;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "user_email")
     private String userEmail;
+    
     @Column(name = "blocked")
     private Boolean blocked;
+    
     @ManyToMany
     @JoinTable(
             name = "USERS_ROLES",
@@ -81,7 +90,23 @@ public class User implements Serializable {
 //    private Set<Book> books;
 
     
-    @OneToMany(mappedBy = "book")
+    public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Set<UsersBooks> getUsersBooks() {
+		return usersBooks;
+	}
+
+	public void setUsersBooks(Set<UsersBooks> usersBooks) {
+		this.usersBooks = usersBooks;
+	}
+
+	@OneToMany(mappedBy = "book")
     private Set<UsersBooks> usersBooks = new HashSet<UsersBooks>();
     
     
@@ -92,13 +117,19 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(Integer userId, int userLogin, String userEmail) {
+    public User(Integer userId, String userLogin, String userEmail) {
         this.userId = userId;
         this.userLogin = userLogin;
         this.userEmail = userEmail;
     }
 
-    public Integer getUserId() {
+    public User(String name, String password, Set<Role> roles) {
+		this.setUserName(name);
+		this.setUserPassword(password);
+		this.setRoles(roles);
+	}
+
+	public Integer getUserId() {
         return userId;
     }
 
@@ -122,11 +153,11 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    public int getUserLogin() {
+    public String getUserLogin() {
         return userLogin;
     }
 
-    public void setUserLogin(int userLogin) {
+    public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
 

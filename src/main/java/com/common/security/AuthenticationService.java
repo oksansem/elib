@@ -29,11 +29,12 @@ public class AuthenticationService implements UserDetailsService {
     
     public UserDetails loadUserByUsername(String login)
             throws UsernameNotFoundException {
+    	System.out.println("*************************In user autentification service!*************************");
         User user = userDAO.getUser(login);
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
-                    user.getName(),
-                    user.getPassword(),
+                    user.getUserName(),
+                    user.getUserPassword(),
                     true,
                     true,
                     true,
@@ -48,7 +49,7 @@ public class AuthenticationService implements UserDetailsService {
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
         return authorities;
     }

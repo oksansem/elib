@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        return createUser(user.getName(), user.getPassword(), user.getRoles());
+        return createUser(user.getUserName(), user.getUserPassword(), user.getRoles());
     }
 
     public void deleteUser(String name) {

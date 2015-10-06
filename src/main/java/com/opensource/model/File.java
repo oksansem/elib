@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "File.findAll", query = "SELECT f FROM File f"),
     @NamedQuery(name = "File.findByFileId", query = "SELECT f FROM File f WHERE f.fileId = :fileId"),
-    @NamedQuery(name = "File.findByFileTypeId", query = "SELECT f FROM File f WHERE f.fileTypeId = :fileTypeId")})
+    @NamedQuery(name = "File.findByFileTypeId", query = "SELECT f FROM File f WHERE f.fileType = :fileType")})
 public class File implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

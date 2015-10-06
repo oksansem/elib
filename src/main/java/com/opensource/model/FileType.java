@@ -6,6 +6,7 @@
 package com.opensource.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,17 +33,21 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "FileType.findByFileTypeName", query = "SELECT f FROM FileType f WHERE f.fileTypeName = :fileTypeName"),
     @NamedQuery(name = "FileType.findByFileTypeValue", query = "SELECT f FROM FileType f WHERE f.fileTypeValue = :fileTypeValue")})
 public class FileType implements Serializable {
-    private static final long serialVersionUID = 1L;
+    @Transient
+	private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "file_type_id")
     private Integer fileTypeId;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "file_type_name")
     private String fileTypeName;
+    
     @Size(max = 20)
     @Column(name = "file_type_value")
     private String fileTypeValue;

@@ -6,7 +6,9 @@
 package com.opensource.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -44,8 +46,8 @@ public class UsersBooks implements Serializable {
     private Book book;
 
     @Column(name = "date_added")
-    @Temporal(TemporalType.TIMESTAMP)
-    private String dateAdded;
+    @Temporal(TemporalType.DATE)
+    private Date dateAdded;
     
     @Column(name = "font_id")
     private int fontId;
@@ -101,11 +103,11 @@ public class UsersBooks implements Serializable {
         this.book = book;
     }
 
-    public String getDateAdded() {
+    public Date getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(String dateAdded) {
+    public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
     }
 
